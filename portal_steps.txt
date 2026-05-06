@@ -1,0 +1,22 @@
+cd backend
+python -m venv .venv
+.\.venv\Scripts\Activate
+pip install -r requirements.txt
+pip install pydantic[email]
+python seed.py                    # creates first admin
+uvicorn app.main:app --reload
+
+# Restart both processes so new env / config is picked up cleanly:
+# Backend (Ctrl+C then):
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+# Frontend (Ctrl+C then):
+npm run dev
+
+
+  Username: pranav.rana
+  Full name: Pranav Rana
+  Email: pranav.rana02@pwc.com
+  Organisation [PwC India]:         (just press Enter to accept the default)
+  Password: @portalAgentic135!!
+  Confirm:  @portalAgentic135!!
