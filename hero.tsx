@@ -90,7 +90,7 @@ export function Hero(_props?: { stats?: { engagements: number; assets: number; c
             Agentic Automation Practice • PwC India
           </div>
 
-          <h1 className="mt-6 font-display text-4xl font-semibold leading-[1.04] tracking-tightest text-pwc-ink md:text-5xl lg:text-6xl">
+          <h1 className="mt-6 font-display text-4xl font-semibold leading-[1.12] tracking-tightest text-pwc-ink md:text-5xl lg:text-6xl">
             {HEADLINE_WORDS.map((w, i) => (
               <span key={i} className="word-reveal mr-[0.22em]">
                 <span

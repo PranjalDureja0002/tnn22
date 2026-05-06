@@ -1,0 +1,285 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-white text-pwc-ink;
+    font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "Helvetica Neue", Arial, system-ui, sans-serif;
+    font-feature-settings: "kern", "liga";
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display), Georgia, "Times New Roman", serif;
+    color: #1A1A1A;
+    font-weight: 600;
+  }
+
+  ::selection {
+    background-color: #D04A02;
+    color: white;
+  }
+
+  a {
+    @apply transition-colors;
+  }
+}
+
+@layer components {
+  /* PwC wordmark — small "pwc" with the iconic orange tick. */
+  .pwc-wordmark {
+    position: relative;
+    display: inline-flex;
+    align-items: flex-end;
+    font-family: var(--font-sans), "Helvetica Neue", Arial, sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: #1A1A1A;
+    text-transform: lowercase;
+  }
+  .pwc-wordmark::before {
+    content: "";
+    position: absolute;
+    top: -7px;
+    left: 1px;
+    width: 22px;
+    height: 4px;
+    background: linear-gradient(90deg, #D04A02 0%, #FF8C42 80%, transparent 100%);
+    border-radius: 1px;
+    transform: skewX(-18deg);
+  }
+
+  .pwc-parallelogram {
+    position: relative;
+    display: inline-block;
+    background: #D04A02;
+    transform: skewX(-18deg);
+  }
+
+  .pwc-nav-link {
+    @apply relative pb-3 text-[15px] font-medium text-pwc-ink transition-colors;
+    font-family: var(--font-sans), "Helvetica Neue", Arial, sans-serif;
+  }
+  .pwc-nav-link:hover {
+    color: #D04A02;
+  }
+  .pwc-nav-link[data-active="true"] {
+    color: #D04A02;
+  }
+  .pwc-nav-link[data-active="true"]::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: #D04A02;
+  }
+
+  .pwc-cta {
+    @apply inline-flex items-center gap-2 rounded-full bg-pwc-black px-5 py-2.5 text-sm font-medium text-white transition-all;
+  }
+  .pwc-cta:hover {
+    @apply bg-pwc-orange;
+    transform: translateY(-1px);
+  }
+
+  .pwc-cta-secondary {
+    @apply inline-flex items-center gap-2 rounded-full border border-pwc-mist bg-white px-5 py-2.5 text-sm font-medium text-pwc-ink transition-all;
+  }
+  .pwc-cta-secondary:hover {
+    @apply border-pwc-orange text-pwc-orange;
+  }
+
+  .pwc-card {
+    @apply group relative flex flex-col gap-4 rounded-none border border-pwc-mist bg-white p-6 transition-all;
+  }
+  .pwc-card:hover {
+    @apply border-pwc-orange shadow-[0_8px_30px_rgba(208,74,2,0.08)];
+    transform: translateY(-2px);
+  }
+
+  .pwc-section-title {
+    @apply font-display text-3xl font-semibold tracking-tight text-pwc-ink md:text-4xl;
+  }
+
+  .pwc-eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-pwc-orange;
+    font-family: var(--font-sans), "Helvetica Neue", Arial, sans-serif;
+  }
+  .pwc-eyebrow::before {
+    content: "";
+    width: 24px;
+    height: 2px;
+    background: #D04A02;
+  }
+
+  .pwc-tag {
+    @apply inline-flex items-center rounded-full border border-pwc-mist px-3 py-1 text-xs font-medium text-pwc-steel transition-colors;
+  }
+  .pwc-tag:hover {
+    @apply border-pwc-orange text-pwc-orange;
+  }
+  .pwc-tag[data-variant="orange"] {
+    @apply border-transparent bg-pwc-orange-soft text-pwc-burgundy;
+  }
+  .pwc-tag[data-variant="solid"] {
+    @apply border-transparent bg-pwc-ink text-white;
+  }
+
+  /* ---------------------------------------------------------------------
+     Headline word-by-word reveal — each word slides up out of a clipping
+     mask, with a stagger applied via inline animation-delay.
+  ---------------------------------------------------------------------- */
+  .word-reveal {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    /* Tall enough to contain descenders (g, y, p, j) within the overflow
+       mask. 1.04 was clipping the bottoms of letters; 1.22 gives them room. */
+    line-height: 1.22;
+    padding-bottom: 0.05em;
+  }
+  .word-reveal > span {
+    display: inline-block;
+    transform: translateY(110%);
+    animation: word-reveal 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* ---------------------------------------------------------------------
+     Splash screen choreography
+  ---------------------------------------------------------------------- */
+  .splash-logo {
+    opacity: 0;
+    animation: splash-logo 720ms cubic-bezier(0.22, 1, 0.36, 1) 60ms forwards;
+  }
+  .splash-bar {
+    width: 0;
+    opacity: 0;
+    animation: splash-bar 1500ms cubic-bezier(0.22, 1, 0.36, 1) 700ms forwards;
+  }
+  .splash-shutter-l {
+    opacity: 0;
+    transform: translateX(-120px) skewX(-18deg);
+    animation: splash-shutter-l 1500ms cubic-bezier(0.22, 1, 0.36, 1) 200ms forwards;
+  }
+  .splash-shutter-r {
+    opacity: 0;
+    transform: translateX(120px) skewX(-18deg);
+    animation: splash-shutter-r 1500ms cubic-bezier(0.22, 1, 0.36, 1) 380ms forwards;
+  }
+  .splash-tagline {
+    opacity: 0;
+    animation: splash-tagline 700ms ease-out 1700ms forwards;
+  }
+  .splash-hint {
+    opacity: 0;
+    animation: splash-hint 700ms ease-out 2400ms forwards;
+  }
+  .splash-cursor {
+    animation: splash-blink 0.85s step-start infinite;
+  }
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px solid #D04A02;
+  outline-offset: 2px;
+}
+
+.pwc-rule {
+  height: 1px;
+  background: linear-gradient(90deg, #D04A02 0%, #D04A02 24px, #E5E5E5 24px, #E5E5E5 100%);
+  border: 0;
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes word-reveal {
+  0% {
+    transform: translateY(110%);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes splash-logo {
+  0% { opacity: 0; transform: translateY(18px) scale(0.85); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes splash-bar {
+  0% { width: 0; opacity: 0; }
+  20% { opacity: 1; }
+  100% { width: 60vw; opacity: 1; }
+}
+
+@keyframes splash-shutter-l {
+  0% { opacity: 0; transform: translateX(-120px) skewX(-18deg); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: translateX(0) skewX(-18deg); }
+}
+
+@keyframes splash-shutter-r {
+  0% { opacity: 0; transform: translateX(120px) skewX(-18deg); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: translateX(0) skewX(-18deg); }
+}
+
+@keyframes splash-tagline {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes splash-hint {
+  0% { opacity: 0; }
+  100% { opacity: 0.55; }
+}
+
+@keyframes splash-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ---------- Marquee, floating, glow ---------- */
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 60s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes float-card {
+  0%, 100% { transform: translate(0, 0) rotate(-2deg) scale(1); }
+  50% { transform: translate(0, -8px) rotate(-2deg) scale(1); }
+}
+.card-float {
+  animation: float-card 5s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(208, 74, 2, 0.0); }
+  50% { box-shadow: 0 0 0 12px rgba(208, 74, 2, 0.05); }
+}
