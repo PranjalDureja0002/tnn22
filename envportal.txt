@@ -1,0 +1,40 @@
+# ---------- Storage ----------
+STORAGE_BACKEND=local              # local | azure_blob
+LOCAL_STORAGE_PATH=./data/files
+AZURE_BLOB_CONNECTION_STRING=
+AZURE_BLOB_CONTAINER=
+
+# ---------- Relational database ----------
+DATABASE_BACKEND=sqlite            # sqlite | azure_sql
+SQLITE_PATH=./data/portal.db
+AZURE_SQL_CONNECTION_STRING=
+
+# ---------- Vector database ----------
+VECTOR_DB_BACKEND=chromadb         # chromadb | azure_ai_search
+CHROMADB_PATH=./data/chromadb
+
+# ---------- LLM ----------
+LLM_ENABLED=false                  # set true after configuring Azure OpenAI below
+LLM_PROVIDER=azure_openai
+AZURE_OPENAI_ENDPOINT=
+AZURE_OPENAI_API_KEY=
+AZURE_OPENAI_API_VERSION=2024-08-01-preview
+AZURE_OPENAI_CHAT_MODEL=gpt-4o-mini
+AZURE_OPENAI_EMBEDDING_MODEL=text-embedding-3-small
+
+# ---------- OCR ----------
+OCR_ENABLED=false                  # set true if Tesseract is installed on the host
+
+# ---------- Auth ----------
+AUTH_MODE=upload_gate              # upload_gate (starter) | entra_id (Phase 3)
+SESSION_SECRET=change-me-to-a-long-random-string
+SESSION_TIMEOUT_MINUTES=30
+
+# ---------- Server ----------
+HOST=0.0.0.0
+PORT=8000
+DEBUG=true
+
+# ---------- Branding ----------
+PORTAL_TITLE=Agentic Portal
+PORTAL_SUBTITLE=Knowledge & Reuse Hub — PwC India, Agentic Automation Practice
